@@ -1,0 +1,19 @@
+{
+  "name": "project",
+  "description": "A Node test project to learn how to use Node.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index --exec babel-node -e js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-env": "^2.4.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.17.5"
+  }
+}
