@@ -1,18 +1,22 @@
 import express from 'express';
-import userData from './user-data.json';
-import Users from './models';
+import userCtrl from './userCtrl';
 
 const router = express.Router();
 
-router
-  .get('/', (req, res) => {  
-    res.json(Users.getAllUsers());
-  })
-  .get('/:id', (req, res) => {
-    res.json(Users.getUser(req.params.id));
-  })
-  .post('/', (req, res) => {
-    res.json(Users.create(req.body));
-  });
 
-  module.exports = router;
+router.route('/')
+  .get(userCtrl.getUsers)
+  .post(userCtrl.createUser);
+
+
+router.route('/:id') 
+  .get(userCtrl.getUser) 
+  .put((req, res) => {
+    // res.json(Users.getUser(req.params.id));
+  }) 
+  .delete((req, res) => {
+    // res.json(Users.getUser(req.params.id));
+  })
+
+
+  export default router;

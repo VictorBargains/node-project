@@ -1,47 +1,39 @@
 import userData from './user-data.json';
 
-const Users = {
-    getAllUsers: () => {
+
+var name = 'Jeff'
+
+export default {
+    getUsers() {
         return userData;
     },
-    getUser: (paramsId) => {
-    
-        const user = userData.find(user => user.id === parseInt(paramsId));
+    getUser(id) {
+        const user = userData.find(user => user.id === parseInt(id));
         
-        if (user) {
-            return user;
-        } else {
-            return { error: 'No user found with that id.' };
-        }
-    
+        return user ? user : { error: 'No user found with that id.' };
     },
-    create: (requestBody) => {
-
+    create(requestBody) {
         const requiredKeys = ["first_name", "last_name", "email", "gender"];
+        let missingValues = [];
+        let currentKey;
 
-        for (let i = 0; i < requiredKeys.length; i++) {
-            let currentKey = requiredKeys[i];
-                    
+        for (let i = 0, currentKey = requiredKeys[i]; i < requiredKeys.length; i++) {
             if (!(currentKey in requestBody)) {
-                return { error: `Required field, ${currentKey}, not found in request body.` }
+                missingValues.push(currentKey);
             } 
         } 
-        const {first_name, last_name, email, gender} = requestBody;
 
-        let newUser = {
-            first_name,
-            last_name,
-            email,
-            gender
+        if (missingValues.length) {
+            return { 
+                error: `Required field, ${missingValues}, not found in request body.` 
+            };
         }
-        // There is no edge case code for when there are no users in userData.
-        let lastId = userData[userData.length-1].id;
 
-        newUser = Object.assign(newUser, {id: ++lastId});
-        userData.push(newUser);
+
+        let lastId = userData[userData.length-1].id;
+        let newUser = Object.assign(requestBody, {id: ++lastId});
+        userData.push(requestBody);
 
         return newUser;
     }
-}
-
-module.exports = Users;
+};
