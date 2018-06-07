@@ -1,5 +1,5 @@
 
-import Users from './models';
+import Users from '../models/models';
 
 export default {
 	getUsers(req, res) {  
