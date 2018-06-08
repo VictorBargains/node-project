@@ -4,6 +4,8 @@ import userData from './server/models/user-data.json';
 import appMiddleware from './server/appMiddleware';
 import userRouter from './server/routes/userRouter';
 
+import api from './server/api/api';
+
 const PORT = process.env.PORT || 3000;
 const app = express();
 
@@ -11,8 +13,9 @@ const app = express();
 // starts middleware
 appMiddleware(app, express);
 
+api(app);
 
-app.use('/api/user', userRouter);
+//app.use('/api/user', userRouter);
 
 app.use((err, req, res, next) => {
     console.error(err.stack)
