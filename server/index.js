@@ -1,23 +1,20 @@
 import express from 'express';
-import userData from './server/models/user-data.json';
+import userData from './api/user/user-data.json';
 
-import appMiddleware from './server/appMiddleware';
-import userRouter from './server/routes/userRouter';
+import appMiddleware from './appMiddleware';
+import errorMiddleware from './errorMiddleware';
 
-const PORT = process.env.PORT || 3000;
+import userRouter from './api/user/userRoutes';
+import PORT from '../config';
+
 const app = express();
-
 
 // starts middleware
 appMiddleware(app, express);
 
-
 app.use('/api/user', userRouter);
 
-app.use((err, req, res, next) => {
-    console.error(err.stack)
-    res.status(500).json({error: err});
-});
+errorMiddleware(app);
 
 app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
