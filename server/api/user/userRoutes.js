@@ -11,12 +11,8 @@ router.route('/')
 
 router.route('/:id') 
   .get(userCtrl.getUser) 
-  .put((req, res) => {
-    // res.json(Users.getUser(req.params.id));
-  }) 
-  .delete((req, res) => {
-    // res.json(Users.getUser(req.params.id));
-  })
+  .put(userCtrl.editUser) 
+  .delete(userCtrl.deleteUser);
 
 
   export default router;

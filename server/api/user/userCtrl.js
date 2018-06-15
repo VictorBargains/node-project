@@ -1,5 +1,4 @@
-
-import Users from './models';
+import Users from './userModel';
 
 export default {
 	getUsers(req, res) {  
@@ -10,6 +9,11 @@ export default {
   },
   createUser(req, res) {
     res.json(Users.create(req.body));
+  },
+  editUser(req, res) {
+    res.json(Users.editUser(req.params.id, req.body));
+  },
+  deleteUser(req, res) {
+    res.json(Users.deleteUser(req.params.id));
   }
 };
-
