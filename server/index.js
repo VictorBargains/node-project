@@ -1,28 +1,58 @@
 import express from 'express';
-import userData from './api/user/user-data.json';
+import mongoose from 'mongoose';
 
-import appMiddleware from './appMiddleware';
-import errorMiddleware from './errorMiddleware';
+import appMiddleware from './middleware/appMiddleware';
+import errorMiddleware from './middleware/errorMiddleware';
 
-import userRouter from './api/user/userRoutes';
-import PORT from '../config';
+import config from './config/config';
+import api from './api/api';
 
 const app = express();
+
+mongoose.Promise = global.Promise;
 
 // starts middleware
 appMiddleware(app, express);
 
-app.use('/api/user', userRouter);
+api(app);
 
 errorMiddleware(app);
 
-app.listen(PORT, () => {
-    console.log(`http://localhost:${PORT}`);
-});
+let server;
 
-// create server folder with sub directories - look up api design architecture
-// look at 4 examples
-// node api design folder structure
-// create error handler middleware - look up express documentation
-// put and delete endpoint
+function runServer(databaseUrl, port = config.PORT) {
+    
+      return new Promise((resolve, reject) => {
+        mongoose.connect(databaseUrl, err => {
+          if (err) {
+            return reject(err);
+          }
+          server = app.listen(port, () => {
+            console.log(`Your app is listening on port ${port}`);
+            resolve();
+          })
+            .on('error', err => {
+              mongoose.disconnect();
+              reject(err);
+            });
+        });
+      });
+    }
 
+    function closeServer() {
+      return mongoose.disconnect().then(() => {
+        return new Promise((resolve, reject) => {
+          console.log('Closing server');
+          server.close(err => {
+            if (err) {
+              return reject(err);
+            }
+            resolve();
+          });
+        });
+      });
+    }
+    
+    if (require.main === module) {
+      runServer(config.DATABASE_URL).catch(err => console.error(err));
+    }
