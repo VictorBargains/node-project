@@ -12,8 +12,11 @@
     "babel-cli": "^6.26.0",
     "babel-env": "^2.4.1",
     "babel-preset-stage-0": "^6.24.1",
+    "bcryptjs": "^2.4.3",
     "express": "^4.16.3",
+    "mongoose": "^5.1.5",
     "morgan": "^1.9.0",
-    "nodemon": "^1.17.5"
+    "nodemon": "^1.17.5",
+    "validator": "^10.3.0"
   }
 }

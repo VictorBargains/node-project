@@ -11,7 +11,7 @@ router.route('/')
 
 router.route('/:id') 
   .get(userCtrl.getUser) 
-  .put(userCtrl.editUser) 
+  .put(userCtrl.updateUser) 
   .delete(userCtrl.deleteUser);
 
 
