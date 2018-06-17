@@ -1,6 +1,6 @@
 {
-  "name": "project",
-  "description": "A Node test project to learn how to use Node.",
+  "name": "Coffee-App",
+  "description": "Full-stack Coffee recipe app",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
