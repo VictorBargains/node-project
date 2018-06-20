@@ -1,69 +1,49 @@
 import User from './userModel';
-
-const requiredKeys = ['firstName', 'lastName', 'email', 'gender', 'password'];
+import { validateFields, errorHandler } from '../apiHelpers';
+import { ApiException } from '../../errorHandlers/exceptions';
 
 export default {
-	getUsers(req, res) {  
+	getUsers(req, res, next) {  
     User.find().then(docs => {
+      if (!docs.length) {
+        return errorHandler({
+          message: 'No resource found',
+          status: 404
+        }, ApiException, next);
+      }
       res.json(docs);
     })
     .catch(err => {
-      console.error(err);
-      res.status(500).json({error: 'Internal Server Error'});
+      return errorHandler(err, ApiException, next);
     });
   },
-  getUser(req, res) {
+  getUser(req, res, next) {
     User.findById(req.params.id).then(doc => {
       res.json(doc);
     })
     .catch(err => {
-      console.error(err);
-      res.status(500).json({error: 'Internal Server Error'});
+      return errorHandler(err, ApiException, next);
     });
   },
-  createUser(req, res) {
-    let missingValues = [];
-    let currentKey;
+  createUser(req, res, next) {
 
-    for (let i = 0; i < requiredKeys.length; i++) {
+      validateFields(req, res, next)
       
-      currentKey = requiredKeys[i];
+      const newUser = new User(req.body);
 
-      if (!(currentKey in req.body)) {
-            missingValues.push(currentKey);
-        } 
-    } 
-
-    if (missingValues.length) {
-        return res.json({error: `Required field, ${missingValues}, not found in request body.`});
-    }
-
-      User.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        gender: req.body.gender,
-        password: req.body.password
-      })
+      newUser.save()
       .then(doc => {
-        res.status(201).json(doc);
+        res.json(doc);
       })
       .catch(err => {
-        console.error(err);
-        res.status(500).json({message: 'Internal Server Error'});
+        return errorHandler(err, ApiException, next);
       })
 
   },
-  updateUser(req, res) {
+  updateUser(req, res, next) {
 
   },
-  deleteUser(req, res) {
+  deleteUser(req, res, next) {
 
   }
 };
-
-
-  // test whether hashed pass equals original pass when user enters pass on frontend?
-  // bcrypt.compare(inputedPass, hashPass, (err, result) => {
-  //  return res;
-  //})

@@ -1,5 +1,14 @@
-export default {
+const config = {
     PORT: process.env.PORT || 8080,
-    DATABASE_URL: process.env.DATABASE_URL || 'mongodb://localhost/coffeeApp',
-    TEST_DATABASE_URL: process.env.TEST_DATABASE_URL || 'mongodb://localhost/test-coffeeApp'
+    ENV: process.env.NODE_ENV || 'dev'
 }
+
+if (config.ENV === 'development' || config.ENV === 'production') {
+    config.DATABASE_URL = process.env.DATABASE_URL;
+} else if (config.ENV === 'test') {
+    config.DATABASE_URL = 'mongodb://localhost/test-CoffeeApp';
+}
+
+export default config;
+
+

@@ -133,17 +133,3 @@ export default User;
 //     }
 // };
 
-// {
-//     "id": 10,
-//     "first_name": "Alexine",
-//     "last_name": "Gillopp",
-//     "email": "agillopp9@reference.com",
-//     "gender": "Female"
-// // }
-
-// {
-// 	"id": 10,
-// 	"email": "jeff.mignone@gmail.com",
-// 	"last_name": "Silversteen",
-// 	"gender": "Male"
-// }

@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/index --exec babel-node -e js"
+    "start": "NODE_ENV=development nodemon server/index --exec babel-node -e js"
   },
   "author": "",
   "license": "ISC",
