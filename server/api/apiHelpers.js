@@ -22,7 +22,7 @@ const validateFields = (req, res, next) => {
     } 
     
     if (missingValues.length) {
-        return errorHandler({status: 500, message: `Missing fields, ${missingValues}`}, ApiException, next);
+        return errorHandler({status: 400, message: `Missing fields, ${missingValues}`}, ApiException, next);
     }
 
 };
