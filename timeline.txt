@@ -1,9 +1,22 @@
 / ** CREATE BACKEND ** /
 - Figure out how to handle different types of errors with main error middleware.
-- Create development, production, and test configs.  
+
+
+- Create config (20 min - 30m)
+    • ports (10m -15m)
+    • databases (10m - 15m)
+    
+  
 - Finish API for users
-    - PUT endpoint
-    - DELETE endpoint
+    • create PUT endpoint
+        * Validate request (?)
+          - write validate helper
+          - write exception classes
+          etc
+        
+    • create DELETE endpoint
+    
+    
 - Create API for recipes
     - Create recipes model.
         - Coffee name, ingredients - object, directions - object
