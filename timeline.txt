@@ -1,0 +1,37 @@
+/ ** CREATE BACKEND ** /
+- Figure out how to handle different types of errors with main error middleware.
+- Create development, production, and test configs.  
+- Finish API for users
+    - PUT endpoint
+    - DELETE endpoint
+- Create API for recipes
+    - Create recipes model.
+        - Coffee name, ingredients - object, directions - object
+    - Create recipes folder with recipeCtrl, recipeModel, and recipeRoutes.
+    - Add any API helpers - validating new recipe has all fields.
+    - Use error handling. 
+    - Add recipe router to api.js.
+    - create get, delete, post, and put endpoints.
+        - create routes to route user to correct frontend page. Examples res.redirect('/user/login'), /user/register
+- Error/validation messages for user to see on front end.
+    - Express sessions, possible npm modules?
+- Create authentication for user login with passport.js
+    - Read documentation, tutorials on passport.js.
+    - Set up passport.js.
+    - Protect routes for only authorized users.
+
+/ ** CREATE FRONTEND ** /
+
+- Create pug files to render html on server.
+    - Research pug and how to create reusable components so you're not repeating yourself. 
+    - Use bootstrap to create components/pages:
+        - Nav
+        - User register
+        - User login
+        - All recipes page
+        - Edit recipe
+        - Add recipe
+- Possibly add client JavaScript validation for user forms and recipes
+
+
+
