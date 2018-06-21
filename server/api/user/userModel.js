@@ -21,6 +21,9 @@ const userSchema = mongoose.Schema({
         minlength: 1,
         trim: true,
         unique: 'Email has already been used.',
+        
+        // WHERE DID YOU GET 'validator.isEmail' AND 'message' FROM?
+        // HAVE YOU TESTED IF THIS WORKS?
         validate: {
             validator: validator.isEmail
         },
@@ -42,6 +45,12 @@ const userSchema = mongoose.Schema({
 userSchema.pre('save', function(next) {
     const user = this;
     if (user.isModified('password')) {
+        // WHY NOT DO BOTH AT ONCE?
+        // bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+                // Store hash in your password DB.
+        //});
+        //DON'T JUST COPY AND PAST CODE; ALWAYS READ THE DOCS
+        // https://github.com/kelektiv/node.bcrypt.js
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(user.password, salt, function(err, hash) {
                 user.password = hash;
