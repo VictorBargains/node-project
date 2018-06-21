@@ -8,20 +8,20 @@ export default {
 	 // CHOOSE SEMANTIC VARIABLE NAMES
 	 // WHEN YOU HAVE A LOT OF STUFF GOING ON
 	 // STACK THE CHAINED METHODS FOR BETTER READABILITY
-	.then(docs => {
-      	  if (!docs.length) {
+	.then(users => {
+      	  if (!users.length) {
             	return errorHandler({
               		message: 'No resource found',
               		status: 404
             }, ApiException, next);
       	}
 	    
-      	res.json(docs);
-    	})
-    	.catch(err => {
+      	res.json(users);
+    })
+    .catch(err => {
       		// DID YOU CHECK WHAT THIS ERROR LOOKS LIKE?
       		return errorHandler(err, ApiException, next);
-    	});
+    });
   },
   getUser(req, res, next) {
     User.findById(req.params.id)
@@ -38,10 +38,10 @@ export default {
       const newUser = new User(req.body);
 
       newUser.save()
-      	.then(doc => {
+      	.then(user => {
 	      	// MAYBE "USER"?
 	      	// WHAT IF THERE IS NONE?
-        	res.json(doc);
+        	res.json(user);
       	})
       	.catch(err => {
         	return errorHandler(err, ApiException, next);
