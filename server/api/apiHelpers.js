@@ -1,5 +1,7 @@
 import { ApiException } from '../errorHandlers/exceptions';
 
+// I AM NOT SURE IT IS A GOOD IDEA TO COPY MY CODE VERBATIM
+// THIS FUNCTION IS OK, BUT TRY TO COME UP WITH YOUR OWN SOLUTIONS
 const errorHandler = (err, Exception, next) =>  {
     next(new Exception(err.message, err.status));
 };
