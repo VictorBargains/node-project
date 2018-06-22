@@ -5,13 +5,13 @@ import bcrypt from 'bcryptjs';
 const userSchema = mongoose.Schema({
     firstName: {
         type: String,
-        required: 'First name is required.',
+        // required: 'First name is required.',
         minlength: 1,
         trim: true
     },
     lastName: {
         type: String,
-        required: 'Last name is required.',
+        // required: 'Last name is required.',
         minlength: 1,
         trim: true
     },
@@ -31,7 +31,7 @@ const userSchema = mongoose.Schema({
     },
     gender: {
         type: String,
-        required: 'Gender is required',
+        // required: 'Gender is required',
         minlength: 1,
     },
     password: {
