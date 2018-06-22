@@ -2,7 +2,7 @@
 - Figure out how to handle different types of errors with main error middleware.
 
 
-- Create config (20 min - 30m)
+- Create config (20 min - 30m) √ -- 15m to complete
     • ports (10m -15m)
     • databases (10m - 15m)
     
