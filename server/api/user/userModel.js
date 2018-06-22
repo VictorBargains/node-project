@@ -20,7 +20,7 @@ const userSchema = mongoose.Schema({
         required: true,
         minlength: 1,
         trim: true,
-        unique: 'Email has already been used.',
+        unique: true,
         
         // WHERE DID YOU GET 'validator.isEmail' AND 'message' FROM?
         // HAVE YOU TESTED IF THIS WORKS?
