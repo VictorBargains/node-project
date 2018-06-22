@@ -1,18 +1,20 @@
 const config = {
     PORT: process.env.PORT || 8080,
     ENV: process.env.NODE_ENV || 'development',
-    // DATABASE_URL: getDBUrl();
-}
+    DATABASE_URL: getDBUrl()
+};
 
-// "dev" or "development"? Stick with one
+const getDBUrl = () => {
+    let envs = {
+       development: 'mongodb://localhost/coffee-app-dev',
+       production: process.env.DATABASE_URL,
+       testing: 'mongodb://localhost/coffee-app-testing'
+    };
+    
+    return envs[config.ENV];
+};
 
-// you could create a function that returns DB URL and invoke that function in the config obj itself
-// design a function that doesn't use "if statements"; think of the data structures the language offers you
-if (config.ENV === 'development' || config.ENV === 'production') {
-    config.DATABASE_URL = process.env.DATABASE_URL;
-} else if (config.ENV === 'test') {
-    config.DATABASE_URL = 'mongodb://localhost/test-CoffeeApp';
-}
+// config.DATABASE_URL = getDBUrl(config.ENV);
 
 export default config;
 
