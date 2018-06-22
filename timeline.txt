@@ -6,7 +6,6 @@
     • ports (10m -15m)
     • databases (10m - 15m)
     
-  
 - Finish API for users
     • create PUT endpoint
         * Validate request (?)
@@ -15,23 +14,58 @@
           etc
         
     • create DELETE endpoint
+        * same as above
     
     
+TASK 
 - Create API for recipes
-    - Create recipes model.
-        - Coffee name, ingredients - object, directions - object
-    - Create recipes folder with recipeCtrl, recipeModel, and recipeRoutes.
-    - Add any API helpers - validating new recipe has all fields.
-    - Use error handling. 
-    - Add recipe router to api.js.
-    - create get, delete, post, and put endpoints.
-        - create routes to route user to correct frontend page. Examples res.redirect('/user/login'), /user/register
+    • Create /recipes folder with recipeCtrl, recipeModel, and recipeRoutes. 
+    • Create recipes model.
+        * Fields:
+            - recipe title (String)
+            - ingredients (Array of Strings)
+            - object, directions - object
+    
+    • Create recipes ctrl.
+        -
+        -
+     
+     • Create recipes route.
+        - 
+        -
+    
+    • Implement error handlers
+        - model hooks?
+        - route level?
+    
+   • Add recipe router to api.js.
+  
+   TASK 
+   - Create login route and controller (2h - 4h)
+        • make a public login route (10m - 20m)
+        • implement user session (express globals)
+        • check if password and email match
+        • test
+   
+   TASK
+   - Create local authentication strategy for login with passport.js
+        • Read documentation, tutorials on passport.js.
+        • Set up passport.js.
+            - do this first
+            - then this
+            - finally this
+        • implement strategy on login route
+        • test
+  
+   
+   
+  - Create error handlers
+    
+    - Add any API helpers - validating new recipe has all fields. XXXX
+    
 - Error/validation messages for user to see on front end.
     - Express sessions, possible npm modules?
-- Create authentication for user login with passport.js
-    - Read documentation, tutorials on passport.js.
-    - Set up passport.js.
-    - Protect routes for only authorized users.
+
 
 / ** CREATE FRONTEND ** /
 
