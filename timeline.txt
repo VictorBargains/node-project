@@ -5,40 +5,44 @@
 - Create config (20 min - 30m) √ -- 15m to complete
     • ports (10m -15m)
     • databases (10m - 15m)
+
+- Account for strings or objects in main app middleware (20 min - 25 min) √ -- 30m to complete
     
-- Finish API for users
-    • create PUT endpoint
-        * Validate request (?)
-          - write validate helper
-          - write exception classes
+- Finish API for users (1 hr - 2 hr) √ -- 2.5hrs to complete
+    • create PUT endpoint (45 min - 1 hr)
+        * Validate request (?) (10 min - 15 min)
+          - write mongoose code (20 min - 30 min)
+          - write validate helper (5 min - 15 min)
+          - write exception classes (1 min - 5 min)
           etc
         
-    • create DELETE endpoint
-        * same as above
-    
+    • create DELETE endpoint (20 min - 30 min)
+          - write mongoose code (10 min - 15 min)
+          - write validate helper - N/A
+          - write exception classes (1 min - 5 min) 
     
 TASK 
-- Create API for recipes
-    • Create /recipes folder with recipeCtrl, recipeModel, and recipeRoutes. 
-    • Create recipes model.
+- Create API for recipes (2.5 hrs - 3.5 hrs) -- currently 1.5 hrs  
+    • Create /recipes folder with recipeCtrl, recipeModel, and recipeRoutes. (1 min - 5 min) 
+    • Create recipes model. (30 min - 40 min) 
         * Fields:
             - recipe title (String)
             - ingredients (Array of Strings)
-            - object, directions - object
+            - directions - (Array of Strings)
+            - description - (String)
     
-    • Create recipes ctrl.
-        -
-        -
+    • Create recipes ctrl. (1 hr - 2 hr)
+        - Use user ctrl as a reference (15 min - 20 min)
+        - Write validate helpers - (15 min - 30 min)
      
-     • Create recipes route.
-        - 
-        -
+     • Create recipes route. (5 min - 15 min)
+        - Create recipe routes with controller functions (5 min - 15 min)
     
     • Implement error handlers
         - model hooks?
         - route level?
     
-   • Add recipe router to api.js.
+   • Add recipe router to api.js. (1 min - 2 min)
   
    TASK 
    - Create login route and controller (2h - 4h)
