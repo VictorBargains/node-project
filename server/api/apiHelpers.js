@@ -27,8 +27,28 @@ const validateFields = (req, res, next) => {
 
 };
 
+const checkIdsMatch = (req, res, next) => {
+    if (req.params.id !== req.body.id) {
+        return errorHandler({
+            message: `Parameter Id, ${req.params.id}, and request body id, ${req.body.id}, must match.`,
+            status: '400'
+        }, ApiException, next);
+    }
+}
+
+const checkIfEmpty = (req, res, next) => {
+    if (Object.keys(req.body).length === 1 && req.body.id) {
+        return errorHandler({
+            message: `No fields were requested for update.`,
+            status: '400'
+        }, ApiException, next);
+    }
+}
+
 export {
     validateFields,
-    errorHandler
+    errorHandler,
+    checkIdsMatch,
+    checkIfEmpty
 }
 
