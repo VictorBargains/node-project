@@ -53,10 +53,21 @@ const checkIfEmpty = (req, res, next) => {
     }
 }
 
+const checkIfCreator = (userId, recipe) => {
+    let isCreator = false;
+    
+    if (recipe.creator === req.user._id) {
+        isCreator = true;
+    }
+    
+    return isCreator;
+}
+
 export {
     validateFields,
     errorHandler,
     checkIdsMatch,
-    checkIfEmpty
+    checkIfEmpty,
+    checkIfCreator
 }
 
