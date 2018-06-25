@@ -8,33 +8,33 @@ export default {
 		.then(users => {
       	  if (!users.length) {
             	return errorHandler({
-              		message: 'No resource found',
+              		message: 'No users found.',
               		status: 404
-            }, ApiException, next);
+            }, next);
       	}
 	    
       	res.json(users);
     })
     .catch(err => {
       		// DID YOU CHECK WHAT THIS ERROR LOOKS LIKE?
-      		return errorHandler(err, ApiException, next);
+      		return errorHandler(err, next);
     });
   },
   getUser(req, res, next) {
     User.findById(req.params.id)
 		.then(user => {
-
+				
 				if (!user) {
 						return errorHandler({
-							message: 'No resource found',
+							message: 'No user found.',
 							status: 404
-						}, ApiException, next);
+						}, next);
 				}
 
       	  res.json(user);
     	})
     	.catch(err => {
-      return errorHandler(err, ApiException, next);
+      return errorHandler(err, next);
     });
   },
   createUser(req, res, next) {
@@ -46,31 +46,27 @@ export default {
 	      	// WHAT IF THERE IS NONE?
         	res.json(user);
       })
-      .catch(err => {
-        	return errorHandler(err, ApiException, next);
-      })
+      .catch(err => {	
+				return errorHandler(err, next);
+			})
 
   },
   updateUser(req, res, next) {
-
-		checkIdsMatch(req, res, next);
-
-		checkIfEmpty(req, res, next);
 
 		User.findByIdAndUpdate(req.params.id, { $set: req.body }, { runValidators: true, new: true })
 		.then(updatedUser => {
 
 				if (!updatedUser) {
 					return errorHandler({
-						message: 'No resource found',
+						message: 'No user found to update.',
 						status: 404
-					}, ApiException, next);
+					}, next);
 				}
 
 				res.json(updatedUser);
 		})
 		.catch(err => {
-			return errorHandler(err, ApiException, next);
+			return errorHandler(err, next);
 		});
   },
   deleteUser(req, res, next) {
@@ -79,15 +75,15 @@ export default {
 
 			if (!deletedUser) {
 				return errorHandler({
-					message: 'No resource found',
+					message: 'No user found to delete.',
 					status: 404
-				}, ApiException, next);
+				}, next);
 			}
 
 			res.json(deletedUser);
 		})
 		.catch(err => {
-			return errorHandler(err, ApiException, next);
+			return errorHandler(err, next);
 		}); 
   }
 };
