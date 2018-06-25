@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
-import bcrypt from 'bcryptjs';
+import Recipe from '../recipe/recipeModel';
+const Schema = mongoose.Schema;
 
 const userSchema = mongoose.Schema({
     firstName: {
@@ -32,7 +33,11 @@ const userSchema = mongoose.Schema({
         type: String,
         required: 'Password is required',
         minlength: 1
-    }
+    },
+    recipes: [{ 
+        type: Schema.Types.ObjectId,
+        ref: 'Recipe'
+    }]
 });
 
 const User = mongoose.model('User', userSchema);
