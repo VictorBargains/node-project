@@ -1,27 +1,72 @@
 import Recipe from './recipeModel';
+import User from '../user/userModel';
 import { validateFields, errorHandler, checkIdsMatch, checkIfEmpty } from '../apiHelpers';
 import { ApiException } from '../../errorHandlers/exceptions';
 
 export default {
+	getUserRecipes(req, res, next) {
+	 
+		req.user = { name: 'Jeff Mignone', id: '5b2e72ee852256686c1cb92e' };  
+	 
+		User
+		.findById(req.user.id)
+		.then(user => {
+
+			if (!user) {
+        	return errorHandler({
+          		message: 'No user found.',
+          		status: 404
+				}, next);
+			}
+				
+			user
+			.populate('recipes')
+			.execPopulate()
+			.then(user => {
+				
+				if (!user) {
+					return errorHandler({
+								message: 'No user found.',
+								status: 404
+					}, next);
+				}
+				
+				res.json(user.recipes);
+				// res.render('recipe', { userName: req.user.name recipes: user.recipes })
+				// if user.recipes is an empty array (!user.recipes.length), within pug file write 'No Recipes'
+			})
+			.catch(err => {			
+				return errorHandler(err, next);
+			});
+
+		})
+		.catch(err => {
+			return errorHandler(err, next);
+		});
+	},
   getRecipes(req, res, next) {  
-    Recipe.find()
+		Recipe
+		.find()
 		.then(recipes => {
-      	  if (!recipes.length) {
-            	return errorHandler({
+      	if (!recipes.length) {
+            return errorHandler({
               		message: 'No recipes found.',
               		status: 404
             }, next);
-      	}
-	    
+				}
+				// res.render('/recipes', { recipes })
+				// loop over recipe._id and add a view btn linking to /recipe/:id
+
       	res.json(recipes);
     })
     .catch(err => {
-      		// DID YOU CHECK WHAT THIS ERROR LOOKS LIKE?
       		return errorHandler(err, next);
     });
   },
   getRecipe(req, res, next) {
-    Recipe.findById(req.params.id)
+
+		Recipe
+		.findById(req.params.id)
 		.then(recipe => {
 
 				if (!recipe) {
@@ -31,6 +76,10 @@ export default {
 						}, next);
 				}
 
+				// checkIfCreator(req.user._id, recipe);
+				
+					// res.render('recipe', { recipe, isCreator: isCreator(req.user._id) }) 
+					// if CheckIfCreator is true, show edit and delete btns on recipe page
       	  res.json(recipe);
     	})
     	.catch(err => {
@@ -39,13 +88,31 @@ export default {
   },
   createRecipe(req, res, next) {
 
+			req.user = { id: '5b2e72ee852256686c1cb92e' };
+			req.body.creator = req.user.id;
+
 			const newRecipe = new Recipe(req.body);
 
-      newRecipe.save(req.body)
+			newRecipe
+			.save(req.body)
       .then(recipe => {
-					// WHAT IF THERE IS NONE?
+		
+					if (!recipe) {
+							return errorHandler({
+								message: 'Recipe couldn\'t be saved.',
+								status: 404
+							}, next);
+					}
 					// find user on user model by _id (req.user?) and push recipe to recipes array.
-        	res.json(recipe);
+					User
+					.findOneAndUpdate({ _id: req.user.id }, { $push: { recipes: recipe._id } }, {  new: true })
+					.then(user => {
+						res.json(user);
+				  	// res.redirect('/recipe/:id');
+					})
+					.catch(err => {
+						return errorHandler(err, next);
+				});
       })
       .catch(err => {
         	return errorHandler(err, next);
@@ -54,16 +121,17 @@ export default {
   },
   updateRecipe(req, res, next) {
 
-		Recipe.findByIdAndUpdate(req.params.id, { $set: req.body }, { runValidators: true, new: true })
+		Recipe
+		.findByIdAndUpdate(req.params.id, { $set: req.body }, { runValidators: true, new: true })
 		.then(updatedRecipe => {
-
+			
 				if (!updatedRecipe) {
 					return errorHandler({
 						message: 'No recipe found to update.',
 						status: 404
 					}, next);
 				}
-
+				// res.redirect('/recipe/:id')
 				res.json(updatedRecipe);
 		})
 		.catch(err => {
@@ -71,7 +139,8 @@ export default {
 		});
   },
   deleteRecipe(req, res, next) {
-		Recipe.findByIdAndRemove(req.params.id)
+		Recipe
+		.findByIdAndRemove(req.params.id)
 		.then(deletedRecipe => {
 
 			if (!deletedRecipe) {
@@ -80,7 +149,7 @@ export default {
 					status: 404
 				}, next);
 			}
-
+			// res.redirect('/recipes');
 			res.json(deletedRecipe);
 		})
 		.catch(err => {
