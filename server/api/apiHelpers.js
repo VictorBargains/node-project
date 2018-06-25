@@ -1,9 +1,17 @@
-import { ApiException } from '../errorHandlers/exceptions';
+import { ApiException, ValidationException } from '../errorHandlers/exceptions';
 
 // I AM NOT SURE IT IS A GOOD IDEA TO COPY MY CODE VERBATIM
 // THIS FUNCTION IS OK, BUT TRY TO COME UP WITH YOUR OWN SOLUTIONS
-const errorHandler = (err, Exception, next) =>  {
-    next(new Exception(err.message, err.status));
+const errorHandler = (err, next) =>  {
+    
+    let Exception;
+    
+    if (err.errors) {
+        Exception = ValidationException;
+    } else {
+        Exception = ApiException;
+    }
+    next(new Exception(err.message, err.status, err.errors));
 };
 
 const validateFields = (req, res, next) => {
@@ -32,16 +40,16 @@ const checkIdsMatch = (req, res, next) => {
         return errorHandler({
             message: `Parameter Id, ${req.params.id}, and request body id, ${req.body.id}, must match.`,
             status: '400'
-        }, ApiException, next);
+        }, next);
     }
 }
 
 const checkIfEmpty = (req, res, next) => {
     if (Object.keys(req.body).length === 1 && req.body.id) {
         return errorHandler({
-            message: `No fields were requested for update.`,
+            message: `Must select fields to update.`,
             status: '400'
-        }, ApiException, next);
+        }, next);
     }
 }
 
