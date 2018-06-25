@@ -8,7 +8,7 @@ const recipeSchema = mongoose.Schema({
         trim: true
     },
     description: {
-        type: [String],
+        type: String,
         trim: true
     },
     ingredients: {
@@ -22,7 +22,10 @@ const recipeSchema = mongoose.Schema({
         required: 'Directions are required',
         minlength: 1,
         trim: true,
-        unique: true
+    },
+    creator: {
+        type: String,
+        required: 'Creator is required'
     }
 });
 
