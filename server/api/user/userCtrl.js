@@ -38,6 +38,18 @@ export default {
     });
   },
   createUser(req, res, next) {
+
+			// check if email already exists
+			User
+			.findOne({ email: req.body.email })
+			.then(user => {
+				if (user) {
+					return errorHandler({
+						message: 'User with that email already exists',
+						status: 400
+					}, next)
+				}
+			});
       
       const newUser = new User(req.body);
 
