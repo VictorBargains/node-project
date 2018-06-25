@@ -4,7 +4,7 @@ const recipeSchema = mongoose.Schema({
     title: {
         type: String,
         minlength: 1,
-        required: true,
+        required: 'A title is required.',
         trim: true
     },
     description: {
@@ -13,13 +13,13 @@ const recipeSchema = mongoose.Schema({
     },
     ingredients: {
         type: [String],
-        required: true,
+        required: 'Ingredients are required.',
         minlength: 1,
         trim: true
     },
     directions: {
         type: [String],
-        required: true,
+        required: 'Directions are required',
         minlength: 1,
         trim: true,
         unique: true
