@@ -7,19 +7,31 @@
     • databases (10m - 15m)
 
 - Account for strings or objects in main app middleware (20 min - 25 min) √ -- 30m to complete
+
+    userCtrl.createUser - create USER
     
-- Finish API for users (1 hr - 2 hr) √ -- 2.5hrs to complete
+- Finish API for users (1.5 hr - 2.5 hr) √ -- 3hrs to complete
     • create PUT endpoint (45 min - 1 hr)
         * Validate request (?) (10 min - 15 min)
           - write mongoose code (20 min - 30 min)
           - write validate helper (5 min - 15 min)
-          - write exception classes (1 min - 5 min)
+          - write exception classes (10 min - 15 min)
           etc
         
     • create DELETE endpoint (20 min - 30 min)
           - write mongoose code (10 min - 15 min)
           - write validate helper - N/A
-          - write exception classes (1 min - 5 min) 
+          - write exception classes (10 min - 15 min)
+
+- Needed API calls
+
+    recipeCtrl.getRecipes - get ALL recipes √ 
+    recipeCtrl.getUserRecipes - get USER recipes *
+    recipeCtrl.getUserRecipe - get USER recipe *
+
+    recipeCtrl.deleteRecipe - delete USER recipe √ 
+    recipeCtrl.updateRecipe - update USER recipe √
+    recipeCtrl.createRecipe - create USER recipe *  
     
 TASK 
 - Create API for recipes (2.5 hrs - 3.5 hrs) -- currently 1.5 hrs  
@@ -37,14 +49,22 @@ TASK
      
      • Create recipes route. (5 min - 15 min)
         - Create recipe routes with controller functions (5 min - 15 min)
+
+    • Add any API helpers - validating new recipe has all fields. XXXX
     
     • Implement error handlers
+      - Create error handlers
         - model hooks?
         - route level?
     
-   • Add recipe router to api.js. (1 min - 2 min)
+    • Add recipe router to api.js. (1 min - 2 min)
   
-   TASK 
+   TASK
+   
+   * May not need to do this.
+   * Could check for development env variable and log in as a user automatically 
+   * while in development with passport 
+   
    - Create login route and controller (2h - 4h)
         • make a public login route (10m - 20m)
         • implement user session (express globals)
@@ -55,33 +75,107 @@ TASK
    - Create local authentication strategy for login with passport.js
         • Read documentation, tutorials on passport.js.
         • Set up passport.js.
-            - do this first
-            - then this
-            - finally this
-        • implement strategy on login route
-        • test
-  
-   
-   
-  - Create error handlers
-    
-    - Add any API helpers - validating new recipe has all fields. XXXX
-    
-- Error/validation messages for user to see on front end.
-    - Express sessions, possible npm modules?
-
+            - npm install passport, passport-local, expression session
+            - setup up expression.session({secret: key}), passport.initialize()
+              and passport.session() middleware
+            - add var LocalStrategy contructor through ('passport-local').Strategy
+              and write function to check for err, check if user exists, and 
+              check if password is correct
+            - create post route to '/login' with success and failure redirects
+            - add passport.serializeUser and passport.deserializeUser
+            - add req.isAuthenticated in middleware to check if user is logged in to
+              protect from unauthorized users accessing pages. Leave register and login
+              open for non-logged in users.
 
 / ** CREATE FRONTEND ** /
 
+TASK
 - Create pug files to render html on server.
-    - Research pug and how to create reusable components so you're not repeating yourself. 
-    - Use bootstrap to create components/pages:
-        - Nav
-        - User register
-        - User login
-        - All recipes page
-        - Edit recipe
-        - Add recipe
+    • Use bootstrap to create components/pages:
+        - all pages use the a main layout with the navbar included on each page.
+        - each route represents the page the user is taken to on a GET request.
+        
+        - nav layout template on each page
+            - my recipes,
+            - all recipes,
+            - add recipe,
+            - login,
+            - logout option if signed in
+            - register
+        
+        - LOGIN/REGISTER
+            - /login 
+                - uses 
+                    - nav layout
+                    - block login
+            - /register 
+                - uses
+                    - nav layout
+                    - block register
+        - RECIPES
+
+        - /myrecipes
+            - uses
+                - nav layout
+                - block recipes
+                - search for user and populate recipes 
+                - if no recipes, write 'No recipes available.'
+        - /recipes 
+            - uses
+                - nav layout
+                - block recipes - all recipes with view btn for each recipe
+                - view btn takes you to /recipe/:id
+                - if no recipes, write 'No recipes available.' 
+        - /recipe/:id
+            - uses
+                - nav layout
+                    - block recipe
+                        - check if user id is on specific recipe, if it is show delete, edit btns
+                            - res.render('/recipe/:id', { recipe, userCreated: true/false })
+                        - delete btn - POST request to /deleterecipe/:id in form, redirects to /recipes
+                        - edit btn - clicking on edit takes you to /editrecipe/:id
+        -  /addrecipe
+            - uses
+                - nav layout
+                - recipe form mixin
+                - find user and push recipe _id to recipes array
+                - redirects to /recipe/:id on successful creation
+                - on error flash message with errors redirected to /addrecipe
+        - /editrecipe/:id
+            - uses
+                - nav layout
+                - recipe form mixin
+                - redirects to /recipe/:id on successful edit
+                - on error flash message with errors redirected to /editrecipe/:id
+        
+        - implement passport req.isAuthenticated() middleware for routes where you must be signed in.
+                 
+
+/ ** FLASH MESSAGING **/
+
+TASK
+- Express flash messages
+    • implement flash messaging middleware
+        Example: 
+        flash = require('connect-flash') // import
+        
+        app.use(flash());
+        app.use(function(req, res, next){
+            res.locals.success = req.flash('success');
+            res.locals.errors = req.flash('error');
+            next();
+        });
+
+    • user login 
+        - password, email required
+        - password, email is incorrect
+        - invalid email
+    • user register
+        - password, email required
+        - invalid email
+    • add recipe
+        - title, ingredients, directions required
+
 - Possibly add client JavaScript validation for user forms and recipes
 
 
