@@ -7,8 +7,6 @@
     • databases (10m - 15m)
 
 - Account for strings or objects in main app middleware (20 min - 25 min) √ -- 30m to complete
-
-    userCtrl.createUser - create USER
     
 - Finish API for users (1.5 hr - 2.5 hr) √ -- 3hrs to complete
     • create PUT endpoint (45 min - 1 hr)
@@ -78,6 +76,8 @@
         btn ('/registeruser', createUser)
     ('/login', login)
         btn ('/creatuser', logInUser)
+    ('/addrecipe', loadAddRecipe)
+        btn ('/addrecipe/:id', createRecipe)
  
 TASK 
 - Create API for recipes (2.5 hrs - 3.5 hrs) -- currently 1.5 hrs
