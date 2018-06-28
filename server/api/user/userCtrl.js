@@ -3,6 +3,7 @@ import { validateFields, errorHandler, checkIdsMatch, checkIfEmpty } from '../ap
 import { ApiException } from '../../errorHandlers/exceptions';
 
 export default {
+
   getUsers(req, res, next) {  
     User.find()
 		.then(users => {
@@ -15,27 +16,26 @@ export default {
 	    
       	res.json(users);
     })
-    .catch(err => {
-      		// DID YOU CHECK WHAT THIS ERROR LOOKS LIKE?
-      		return errorHandler(err, next);
-    });
+    .catch(err => errorHandler(err, next));
   },
   getUser(req, res, next) {
-    User.findById(req.params.id)
+		User
+		.findById(req.params.id)
 		.then(user => {
-				
-				if (!user) {
-						return errorHandler({
-							message: 'No user found.',
-							status: 404
-						}, next);
-				}
+			if (!user) {
+				return errorHandler({
+					message: 'No user found.',
+					status: 404
+				}, next);
+			}
 
-      	  res.json(user);
-    	})
-    	.catch(err => {
-      return errorHandler(err, next);
-    });
+			user
+			.populate('recipes')
+			.execPopulate()
+			.then(user => res.json(user))
+			.catch(err => errorHandler(err, next));
+		})
+		.catch(err => errorHandler(err, next));
   },
   createUser(req, res, next) {
 
