@@ -13,15 +13,15 @@ const recipeSchema = mongoose.Schema({
     },
     ingredients: {
         type: [String],
+        default: undefined,
         required: 'Ingredients are required.',
-        minlength: 1,
         trim: true
     },
     directions: {
         type: [String],
-        required: 'Directions are required',
-        minlength: 1,
-        trim: true,
+        default: undefined,
+        required: 'Directions are required.',
+        trim: true
     },
     creator: {
         type: String,

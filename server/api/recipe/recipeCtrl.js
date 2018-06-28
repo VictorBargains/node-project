@@ -4,46 +4,6 @@ import { validateFields, errorHandler, checkIdsMatch, checkIfEmpty } from '../ap
 import { ApiException } from '../../errorHandlers/exceptions';
 
 export default {
-	getUserRecipes(req, res, next) {
-	 
-		req.user = { name: 'Jeff Mignone', id: '5b2e72ee852256686c1cb92e' };  
-	 
-		User
-		.findById(req.user.id)
-		.then(user => {
-
-			if (!user) {
-        	return errorHandler({
-          		message: 'No user found.',
-          		status: 404
-				}, next);
-			}
-				
-			user
-			.populate('recipes')
-			.execPopulate()
-			.then(user => {
-				
-				if (!user) {
-					return errorHandler({
-								message: 'No user found.',
-								status: 404
-					}, next);
-				}
-				
-				res.json(user.recipes);
-				// res.render('recipe', { userName: req.user.name recipes: user.recipes })
-				// if user.recipes is an empty array (!user.recipes.length), within pug file write 'No Recipes'
-			})
-			.catch(err => {			
-				return errorHandler(err, next);
-			});
-
-		})
-		.catch(err => {
-			return errorHandler(err, next);
-		});
-	},
   getRecipes(req, res, next) {  
 		Recipe
 		.find()
@@ -53,7 +13,7 @@ export default {
               		message: 'No recipes found.',
               		status: 404
             }, next);
-				}
+		}
 				// res.render('/recipes', { recipes })
 				// loop over recipe._id and add a view btn linking to /recipe/:id
 
@@ -92,11 +52,9 @@ export default {
 			req.body.creator = req.user.id;
 
 			const newRecipe = new Recipe(req.body);
-
 			newRecipe
-			.save(req.body)
-      .then(recipe => {
-		
+			.save()
+				.then(recipe => {
 					if (!recipe) {
 							return errorHandler({
 								message: 'Recipe couldn\'t be saved.',
@@ -108,15 +66,16 @@ export default {
 					.findOneAndUpdate({ _id: req.user.id }, { $push: { recipes: recipe._id } }, {  new: true })
 					.then(user => {
 						res.json(user);
-				  	// res.redirect('/recipe/:id');
+					// res.redirect('/recipe/:id');
 					})
 					.catch(err => {
 						return errorHandler(err, next);
 				});
-      })
-      .catch(err => {
-        	return errorHandler(err, next);
-      })
+		  })
+		  .catch(err => {
+			  	console.log(err);
+		    	return errorHandler(err, next);
+		  })
 
   },
   updateRecipe(req, res, next) {
