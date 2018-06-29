@@ -20,64 +20,6 @@
           - write mongoose code (10 min - 15 min)
           - write validate helper - N/A
           - write exception classes (10 min - 15 min)
-
-- Needed API calls
-
-    - main page - located at (/recipes)
-        - call to getRecipes - get ALL recipes
-            - each recipe listed
-                - each recipe has a view btn pointing to /recipe/:id
-                    - call to getRecipe when clicking on recipe
-                        - each recipe has view/edit btn
-                            - delete routes to /deleterecipe/:id (IF CREATOR)
-                            - edit routes to /editrecipe/:id (IF CREATOR)
-                            - need middleware to protect /editrecipe/:id and /deleterecipe/:id
-                              if you are logged in, but it's not your recipe and you try to access
-                              these pages.
-    
-    - user recipes page - located at (/myrecipes)
-        - call to getUserRecipes - get USER recipes
-                - each recipe listed
-                    - each recipe has view btn to /recipe/:id
-                        - call to getRecipe when clicking on recipe
-                            - each recipe has view/edit btn
-                            - delete routes to /deleterecipe/:id (req.user_id === recipe.creator)
-                            - edit routes to /editrecipe/:id (req.user_id === recipe.creator)
-
-    - login page - located at (/login)
-        - when user clicks submit, call to loginUser
-            - if authenticated, redirects to /recipes
-            - if not authenticated, redirects to /login
-            - if errors redirects to /login with errors
-    
-    - register page - located at (/register)
-        - when user clicks submit, call to createUser
-            - if created, redirects to /recipes
-            - if wrong, redirects to /register with errors
-
-    - user clicks create recipe - located at (/addrecipe)
-        - when user clicks submit, routes to /recipe/:id
-
-   ('/recipes', getRecipes)
-        btn ('/recipe/:id', getRecipe)
-            btn ('/editrecipe/:id', loadEditRecipe)
-                btn ('/editrecipe/:id', updateRecipe)
-                    - redirects to '/recipe/:id'
-            btn ('/deleterecipe/:id', deleteRecipe)
-                - redirects to /recipes
-    ('/myrecipes', getUserRecipes)
-        btn ('/recipe/:id', getRecipe)
-            btn ('/editrecipe/:id', loadEditRecipe)
-                btn ('/editrecipe/:id', updateRecipe)
-                    - redirects to /recipe/:id
-            btn ('/deleterecipe/:id', deleteRecipe)
-                - redirects to /recipes
-    ('/register', registerUser)
-        btn ('/registeruser', createUser)
-    ('/login', login)
-        btn ('/creatuser', logInUser)
-    ('/addrecipe', loadAddRecipe)
-        btn ('/addrecipe/:id', createRecipe)
  
 TASK 
 - Create API for recipes (2.5 hrs - 3.5 hrs) -- currently 1.5 hrs
@@ -198,6 +140,65 @@ TASK
         
         - implement passport req.isAuthenticated() middleware for routes where you must be signed in.
                  
+
+- Needed API calls
+
+    - main page - located at (/recipes)
+        - call to getRecipes - get ALL recipes
+            - each recipe listed
+                - each recipe has a view btn pointing to /recipe/:id
+                    - call to getRecipe when clicking on recipe
+                        - each recipe has view/edit btn
+                            - delete routes to /deleterecipe/:id (IF CREATOR)
+                            - edit routes to /editrecipe/:id (IF CREATOR)
+                            - need middleware to protect /editrecipe/:id and /deleterecipe/:id
+                              if you are logged in, but it's not your recipe and you try to access
+                              these pages.
+    
+    - user recipes page - located at (/myrecipes)
+        - call to getUserRecipes - get USER recipes
+                - each recipe listed
+                    - each recipe has view btn to /recipe/:id
+                        - call to getRecipe when clicking on recipe
+                            - each recipe has view/edit btn
+                            - delete routes to /deleterecipe/:id (req.user_id === recipe.creator)
+                            - edit routes to /editrecipe/:id (req.user_id === recipe.creator)
+
+    - login page - located at (/login)
+        - when user clicks submit, call to loginUser
+            - if authenticated, redirects to /recipes
+            - if not authenticated, redirects to /login
+            - if errors redirects to /login with errors
+    
+    - register page - located at (/register)
+        - when user clicks submit, call to createUser
+            - if created, redirects to /recipes
+            - if wrong, redirects to /register with errors
+
+    - user clicks create recipe - located at (/addrecipe)
+        - when user clicks submit, routes to /recipe/:id
+
+   ('/recipes', getRecipes)
+        btn ('/recipe/:id', getRecipe)
+            btn ('/editrecipe/:id', loadEditRecipe)
+                btn ('/editrecipe/:id', updateRecipe)
+                    - redirects to '/recipe/:id'
+            btn ('/deleterecipe/:id', deleteRecipe)
+                - redirects to /recipes
+    ('/myrecipes', getUserRecipes)
+        btn ('/recipe/:id', getRecipe)
+            btn ('/editrecipe/:id', loadEditRecipe)
+                btn ('/editrecipe/:id', updateRecipe)
+                    - redirects to /recipe/:id
+            btn ('/deleterecipe/:id', deleteRecipe)
+                - redirects to /recipes
+    ('/register', registerUser)
+        btn ('/registeruser', createUser)
+    ('/login', login)
+        btn ('/creatuser', logInUser)
+    ('/addrecipe', loadAddRecipe)
+        btn ('/addrecipe/:id', createRecipe)
+
 
 / ** FLASH MESSAGING **/
 
