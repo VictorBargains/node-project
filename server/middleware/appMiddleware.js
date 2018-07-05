@@ -1,8 +1,6 @@
 import morgan from 'morgan';
-import session from 'express-session';
-import passport from 'passport';
 
-export default (app, express) => {
+export default (app, express, passport, session) => {
 	app.use(express.json());
 	app.use(express.urlencoded({extended: true}));
 	app.use(session({ 

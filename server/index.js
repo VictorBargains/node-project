@@ -7,10 +7,13 @@ import errorMiddleware from './middleware/errorMiddleware';
 import config from './config/config';
 import api from './api/api';
 
+import session from 'express-session';
+import passport from 'passport';
+
 const app = express();
 
 // starts middleware
-appMiddleware(app, express);
+appMiddleware(app, express, passport, session);
 
 api(app);
 
