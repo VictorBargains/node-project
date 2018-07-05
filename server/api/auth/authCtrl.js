@@ -2,11 +2,7 @@ import passport from "passport";
 
 export default {
     logIn(req, res, next) {
-        passport.authenticate('local', {
-            successRedirect: '/recipes',
-            failureRedirect: '/login',
-            failureFlash: true
-            });
+        console.log(req);
     },
     register(req, res, next) {
 

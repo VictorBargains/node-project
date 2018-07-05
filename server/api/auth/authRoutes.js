@@ -1,14 +1,16 @@
 import express from 'express';
-import authCtrl from './authCtrl';
 import passport from 'passport';
+import authCtrl from './authCtrl';
+import localAuth from './authenticate';
 const router = express.Router();
 
 router.route('/login')
-       .get(authCtrl.loadLogIn)
-       .post(authCtrl.logIn);
+    //    .get(authCtrl.loadLogIn)
+       .post(localAuth);
+
 
 router.route('/register')
-       .get(authCtrl.loadRegister)
+    //    .get(authCtrl.loadRegister)
        .post(authCtrl.register);
 
 export default router;
